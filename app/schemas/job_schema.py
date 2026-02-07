@@ -24,3 +24,9 @@ class JobResponse(JobBase):
     class Config:
         # this is pydantic to treat the beanie document as a dict
         from_attribute = True
+
+class JobUpdate(BaseModel):
+    title: Optional[str] = Field(None, min_length=3, max_length=50)
+    description: Optional[str] = Field(None, min_length=10)
+    budget: Optional[float] = Field(None, gt=0)
+    skills: Optional[List[str]] = None
