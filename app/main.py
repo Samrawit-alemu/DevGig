@@ -5,7 +5,8 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from beanie import init_beanie
 
 from app.config import settings
-from app.models.job_model import Job # import our model
+from app.models.job_model import Job # import our 
+from app.api.router import router as api_router
 
 # 1. Define the Lifespan (Startup/Shutdown logic)
 @asynccontextmanager
@@ -31,6 +32,9 @@ async def lifespan(app: FastAPI):
 
 #  2. Pass lifespan to fastapi
 app = FastAPI(title="DevGig API", version="1.0", lifespan=lifespan)
+
+# Router
+app.include_router(api_router, prefix="/api/v1")
 
 @app.get("/")
 async def health_check():
