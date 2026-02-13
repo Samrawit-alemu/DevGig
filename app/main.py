@@ -6,6 +6,7 @@ from beanie import init_beanie
 
 from app.config import settings
 from app.models.job_model import Job # import our 
+from app.models.user_model import User
 from app.api.router import router as api_router
 
 # 1. Define the Lifespan (Startup/Shutdown logic)
@@ -20,7 +21,7 @@ async def lifespan(app: FastAPI):
     # Initialize Beanie( the translator) - we tell it which db to use and which models to watch
     await init_beanie(
         database=client[settings.DATABASE_NAME],
-        document_models=[Job]
+        document_models=[Job, User]
     )
 
     print("MongoDB Connected Successfully")
