@@ -8,6 +8,8 @@ from app.config import settings
 from app.models.job_model import Job # import our 
 from app.models.user_model import User
 from app.api.router import router as api_router
+from app.api.auth import router as auth_router 
+from app.api.router import router as job_router 
 
 # 1. Define the Lifespan (Startup/Shutdown logic)
 @asynccontextmanager
@@ -36,6 +38,12 @@ app = FastAPI(title="DevGig API", version="1.0", lifespan=lifespan)
 
 # Router
 app.include_router(api_router, prefix="/api/v1")
+
+# Add the Auth Router
+app.include_router(auth_router, prefix="/auth", tags=["Authentication"])
+
+# Add the Job Router
+app.include_router(job_router, prefix="/api/v1", tags=["Jobs"])
 
 @app.get("/")
 async def health_check():
