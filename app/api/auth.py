@@ -3,6 +3,7 @@ from app.schemas.user_schema import UserCreate, UserResponse
 from app.models.user_model import User
 from app.auth.security import get_password_hash, verify_password, create_access_token
 from fastapi.security import OAuth2PasswordRequestForm
+from app.api.deps import get_current_user
 
 router = APIRouter()
 
@@ -57,3 +58,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     
     # 4. Return the token
     return {"access_token": access_token, "token_type": "bearer"}
+
+@router.get("/me", response_model=UserResponse)
+async def read_users_me(current_user: User = Depends(get_current_user)):
+    return current_user

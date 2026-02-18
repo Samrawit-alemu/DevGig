@@ -1,6 +1,8 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Depends
 from typing import List
 from beanie import PydanticObjectId # To validate MongoDB IDs
+from app.api.deps import get_current_user
+from app.models.user_model import User
 
 from app.models.job_model import Job
 from app.schemas.job_schema import JobCreate, JobResponse, JobUpdate
@@ -9,12 +11,17 @@ from app.schemas.job_schema import JobCreate, JobResponse, JobUpdate
 router = APIRouter()
 
 @router.post("/jobs", response_model=JobResponse, status_code=status.HTTP_201_CREATED)
-async def create_job(job_input: JobCreate):
+async def create_job(job_input: JobCreate, 
+                     current_user: User = Depends(get_current_user)):
+    
     # Create a new job posting.
      # 1. Convert Pydantic Schema -> Beanie Document
     # We use **job_input.dict() to unpack the data (title, budget, etc.)
 
     new_job = Job(**job_input.model_dump())
+
+    # 2. Add the owner ID manually
+    new_job.owner_id = current_user.id 
 
      # 2. Save to MongoDB (Async)
     await new_job.create()
@@ -64,11 +71,19 @@ async def update_job(job_id: PydanticObjectId, job_update: JobUpdate):
     return job
 
 @router.delete("jobs/{job_id}")
-async def delete_job(job_id:PydanticObjectId):
+async def delete_job(job_id:PydanticObjectId, 
+                     current_user: User = Depends(get_current_user)):
     # 1 find the job
     job = await Job.get(job_id)
     if not job:
         raise HTTPException(status_code=404, deetail="Job not found")
+    
+    # We compare the job's owner_id with the logged-in user's id
+    if job.owner_id != current_user.id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, # 403 = Forbidden
+            detail="You are not allowed to delete this job"
+        )
     
     # 2 delete it
     await job.delete()
