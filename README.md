@@ -1,5 +1,6 @@
 # DevGig Backend API
 
+<<<<<<< HEAD
 ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
 ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
@@ -101,3 +102,29 @@ FastAPI automatically generates interactive API documentation. Once the server i
   - `GET /api/v1/jobs/{job_id}` - Get details of a specific job.
   - `PUT /api/v1/jobs/{job_id}` - Update a job posting (Requires Auth & Ownership).
   - `DELETE /api/v1/jobs/{job_id}` - Delete a job posting (Requires Auth & Ownership).
+=======
+A RESTful API built with **FastAPI** and **MongoDB**. 
+
+## 🎯 Purpose
+This project was built from scratch to learn and practice modern backend development concepts—such as Clean Architecture, JWT Authentication, and Dependency Injection .
+
+## 🛠️ Tech Stack
+- **Framework:** FastAPI
+- **Database:** MongoDB
+- **ODM:** Beanie & Motor
+- **Authentication:** OAuth2 with Password (JWT & Bcrypt)
+- **Data Validation:** Pydantic (v2)
+
+## 📂 Project Structure
+```text
+devgig_backend/
+├── app/
+│   ├── api/           # The Routes (Endpoints)
+│   ├── auth/          # Security (JWT, Password Hashing)
+│   ├── models/        # Database definitions (Beanie Documents)
+│   ├── schemas/       # Data Validation (Pydantic models)
+│   ├── config.py      # Environment variables & settings
+│   ├── main.py        # Entry point and DB connection
+├── requirements.txt
+└── .gitignore
+>>>>>>> b12972a468cc7ce1c9ad08aa8b05c162d5331dd5
