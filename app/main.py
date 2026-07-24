@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from motor.motor_asyncio import AsyncIOMotorClient
 from beanie import init_beanie
+from fastapi.middleware.cors import CORSMiddleware 
 
 from app.config import settings
 from app.models.job_model import Job # import our 
@@ -48,3 +49,13 @@ app.include_router(job_router, prefix="/api/v1", tags=["Jobs"])
 @app.get("/")
 async def health_check():
     return {"status": "ok", "app_name": "DevGig"}
+
+# Add the Middleware
+# This tells the browser: "Yes, localhost:5173 is allowed to ask for data"
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://localhost:3000"], # Common frontend ports
+    allow_credentials=True,
+    allow_methods=["*"], # Allow GET, POST, PUT, DELETE
+    allow_headers=["*"], # Allow tokens and other headers
+)
