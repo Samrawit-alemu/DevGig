@@ -1,5 +1,5 @@
 # DevGig Backend API
-
+🔗 Live Demo API Documentation: https://devgig-backend.onrender.com/docs#/
 
 ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
 ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
@@ -102,5 +102,3 @@ FastAPI automatically generates interactive API documentation. Once the server i
   - `GET /api/v1/jobs/{job_id}` - Get details of a specific job.
   - `PUT /api/v1/jobs/{job_id}` - Update a job posting (Requires Auth & Ownership).
   - `DELETE /api/v1/jobs/{job_id}` - Delete a job posting (Requires Auth & Ownership).
-=======
-
