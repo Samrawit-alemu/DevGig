@@ -70,7 +70,7 @@ async def update_job(job_id: PydanticObjectId, job_update: JobUpdate):
 
     return job
 
-@router.delete("jobs/{job_id}")
+@router.delete("/jobs/{job_id}")
 async def delete_job(job_id:PydanticObjectId, 
                      current_user: User = Depends(get_current_user)):
     # 1 find the job
